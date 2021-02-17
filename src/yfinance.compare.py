@@ -34,7 +34,7 @@ st.header("Enter up to 5 stock codes!")
 
 st.subheader("Example Input: AAPL, FTSE 100; 1d, 2010-03-14, 2015-03-14")
 
-stock_codes = "AAPL, Gold; 1d, {}, {}".format(last,today)
+stock_codes = "AAPL, Gold, TSLA, MSFT, GE; 1d, {}, {}".format(last,today)
 
 lit = st.text_area("Stock & History Input", stock_codes)
 
