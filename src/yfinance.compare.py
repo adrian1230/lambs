@@ -7,7 +7,20 @@ import datetime as dt
 
 tod = dt.date.today()
 
-tody = int(tod.strftime("%Y"))
+pm1 = int(tod.strftime("%m"))
+
+last = ""
+
+if pm1 == 1:
+    pm1 = str(12)
+    y = int(tod.strftime("%Y"))-1
+    y = str(y)
+    last = tod.strftime("{}-{}-%d").format(y,pm1)
+
+if pm1 != 1:
+    pm1 = pm1 - 1
+    pm1 = str(pm1)
+    last = tod.strftime("%Y-{}-%d").format(pm1)
 
 today = tod.strftime("%Y-%m-%d")
 
@@ -21,7 +34,7 @@ st.header("Enter up to 5 stock codes!")
 
 st.subheader("Example Input: Nasdaq, AAPL, FTSE 100; 1d, 2010-03-14, 2015-03-14")
 
-stock_codes = "AAPL, Gold; 1d, {}, {}".format(today,today)
+stock_codes = "AAPL, Gold; 1d, {}, {}".format(last,today)
 
 lit = st.text_area("Stock & History Input", stock_codes)
 
