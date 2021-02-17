@@ -11,6 +11,7 @@ numpy = "*"
 keras = "*"
 pandas = "*"
 seaborn = "*"
+altair = "*"
 
 [dev-packages]
 
