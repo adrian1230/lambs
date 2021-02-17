@@ -28,7 +28,7 @@ st.write("""
 # Compare Stocks from Yahoo Finance
 """)
 
-st.header("Enter up to 5 stock codes!")
+st.header("Enter stock codes here!")
 
 st.subheader("Example Input: AAPL, FTSE 100; 1d, 2010-03-14, 2015-03-14")
 
@@ -46,11 +46,11 @@ for k in range(len(hist)):
 for i in range(len(lit)):
     lit[i] = lit[i].strip()
 
-if len(lit) > 5:
-    raise ValueError("More than 5")
+# if len(lit) > 5:
+#     raise ValueError("More than 5")
 
-if len(lit) < 2:
-    raise ValueError("Cannot compare")
+# if len(lit) < 2:
+#     raise ValueError("Cannot compare")
 
 print("These are your selected stocks:")
 
