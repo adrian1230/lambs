@@ -3,6 +3,13 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import numpy as np
+import datetime as dt
+
+tod = dt.date.today()
+
+tody = int(tod.strftime("%Y"))
+
+today = tod.strftime("%Y-%m-%d")
 
 st.write("""
 # Compare Stocks from Yahoo Finance
@@ -12,13 +19,27 @@ feature **Closing price** and **Volume**
 
 st.header("Enter up to 5 stock codes!")
 
-st.subheader("Example Input: Nasdaq, AAPL, FTSE 100")
+st.subheader("Example Input: Nasdaq, AAPL, FTSE 100; 1d, 2010-03-14, 2015-03-14")
 
-stock_codes = "AAPL, Gold "
+stock_codes = "AAPL, Gold; 1d, {}, {}".format(today,today)
 
-lit = st.text_area("Stock Input", stock_codes)
+lit = st.text_area("Stock & History Input", stock_codes)
 
-lit = lit.split(',')
+hist  = lit.split(';')[1].split(',')
+
+lit = lit.split(';')[0].split(',')
+
+for k in range(len(hist)):
+    hist[k] = hist[k].strip()
+
+nan = []
+
+for g in range(len(hist)):
+    if hist[g] == "":
+        nan.append(g)
+
+for t in range(len(nan)):
+    del hist[nan[t]]
 
 for i in range(len(lit)):
     lit[i] = lit[i].strip()
@@ -49,4 +70,30 @@ st.write("""
 
 st.header("Your selected stocks")
 lit
+
+close_tick = []
+
+for j in range(len(lit)):
+    data = yf.Ticker(lit[j])
+    df = data.history(period=hist[0],start=hist[1],end=hist[2])
+    close_tick.append(df.Close)
+
+length = 0
+
+for f in range(len(close_tick)):
+    length += len(close_tick[f])
+
+close_tick = np.array(close_tick).reshape((int(length/len(lit)),len(lit)))
+
+Closingchart = pd.DataFrame(
+    close_tick,
+    columns=[lit[d] for d in range(len(lit))]
+)
+
+st.write("""
+## Closing Price
+"""
+)
+st.line_chart(Closingchart)
+
 
