@@ -26,8 +26,6 @@ today = tod.strftime("%Y-%m-%d")
 
 st.write("""
 # Compare Stocks from Yahoo Finance
-
-feature **Closing price** and **Volume**
 """)
 
 st.header("Enter up to 5 stock codes!")
