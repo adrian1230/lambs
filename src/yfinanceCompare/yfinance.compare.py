@@ -43,26 +43,8 @@ lit = lit.split(';')[0].split(',')
 for k in range(len(hist)):
     hist[k] = hist[k].strip()
 
-nan = []
-
-for g in range(len(hist)):
-    if hist[g] == "":
-        nan.append(g)
-
-for t in range(len(nan)):
-    del hist[nan[t]]
-
 for i in range(len(lit)):
     lit[i] = lit[i].strip()
-
-null = []
-
-for k in range(len(lit)):
-    if lit[k] == "":
-        null.append(k)
-
-for i in range(len(null)):
-    del lit[null[i]]
 
 if len(lit) > 5:
     raise ValueError("More than 5")
