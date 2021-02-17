@@ -160,6 +160,30 @@ Volumechart = pd.DataFrame(
 )
 
 st.write("""
+## Open Price
+"""
+)
+st.line_chart(Openchart)
+
+st.write("""
+## High Price
+"""
+)
+st.line_chart(Highchart)
+
+st.write("""
+## Low Price
+"""
+)
+st.line_chart(Lowchart)
+
+st.write("""
+## Volume
+"""
+)
+st.line_chart(Volumechart)
+
+st.write("""
 ## Closing Price
 """
 )
