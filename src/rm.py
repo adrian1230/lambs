@@ -1,3 +1,3 @@
 import os
 
-os.system("rm *~")
+os.system("rm */*~")
