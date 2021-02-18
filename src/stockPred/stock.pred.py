@@ -38,7 +38,7 @@ st.text("Train from 2010-03-14 to 2015-03-14")
 
 stock_codes = "GE; 1d, {}, {}".format(last,today)
 
-lit = st.text_area("Stock & History Input", stock_codes)
+lit = st.text_input("Stock & History Input", stock_codes)
 
 hist  = lit.split(';')[1].split(',')
 
@@ -64,8 +64,6 @@ st.subheader("Training or Application")
 choice = st.text_input("Training or Application; 0 vs 1: ", 1)
 
 choice = int(choice)
-
-print(choice)
 
 if choice < 0 or choice > 1:
     raise ValueError("other than 1 or 0")

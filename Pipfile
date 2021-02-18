@@ -12,6 +12,8 @@ numpy = "*"
 seaborn = "*"
 yfinance = "*"
 streamlit = "*"
+quandl = "*"
+pytrends = "*"
 
 [dev-packages]
 
