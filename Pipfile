@@ -4,16 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-yfinance = "*"
-streamlit = "*"
+pandas = "*"
+tensorflow = "*"
+keras = "*"
 scikit-learn = "*"
 numpy = "*"
-keras = "*"
-pandas = "*"
 seaborn = "*"
-altair = "*"
+yfinance = "*"
+streamlit = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.7"
