@@ -95,30 +95,29 @@ low_tick = np.array(low_tick).reshape(-1)
 volume_tick = []
 volume_tick.append(df.Volume)
 volume_tick = np.array(volume_tick).reshape(-1)
+dividends_tick = []
+dividends_tick.append(df.Dividends)
+dividends_tick = np.array(dividends_tick).reshape(-1)
 
-Closingchart = pd.DataFrame(
-    close_tick,
-)
+Closingchart = pd.DataFrame(close_tick)
 
-Openchart = pd.DataFrame(
-    open_tick,
-)
+Openchart = pd.DataFrame(open_tick)
 
-Highchart = pd.DataFrame(
-    high_tick,
-)
+Highchart = pd.DataFrame(high_tick)
 
-Lowchart = pd.DataFrame(
-    low_tick,
-)
+Lowchart = pd.DataFrame(low_tick)
 
-Volumechart = pd.DataFrame(
-    volume_tick,
-)
+Volumechart = pd.DataFrame(volume_tick,)
 
-print(Volumechart)
+Dividendchart = pd.DataFrame(dividends_tick)
+
+Chart = pd.concat([Openchart,Highchart,Lowchart,Volumechart,Closingchart, Dividendchart],axis=1)
+
+Chart.columns = ['Open','High','Low','Volume','Close','Dividends']
 
 if choice == 0:
     st.header("Begin training now")
+
+
 
 
