@@ -8,6 +8,18 @@ import sklearn as sk
 import datetime as dt
 import tensorflow as tf
 
+from sklearn.preprocessing import MinMaxScaler
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import LSTM
+from keras.layers import Dropout
+from keras.layers import *
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+from keras.callbacks import EarlyStopping
+
 tod = dt.date.today()
 
 py1 = int(tod.strftime("%Y")) - 10
@@ -121,10 +133,50 @@ if choice == 0:
     while process != 1:
         st.header("Begin training now")
         st.text("Training ...")
-        train = Chart.iloc[:round(len(Chart)*0.7),1:6]
-        test = Chart.iloc[round(len(Chart)*0.7):,6]
-        print(train.head())
-        print(test.head())
+        train = Chart.iloc[:round(len(Chart)*0.7),1:6].values
+        test = Chart.iloc[round(len(Chart)*0.7):,6].values
+        scaler = MinMaxScaler(feature_range=(0,1))
+        train_s = scaler.fit_transform(train)
+        x_train, y_train = [], []
+        for i in range(60, round(len(Chart)*0.7)):
+            x_train.append(train_s[i-60:i, 0])
+            y_train.append(train_s[i, 0])
+        x_train, y_train = np.array(x_train), np.array(y_train)
+        x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+        model = Sequential()
+        model.add(
+            LSTM(
+                units=50,
+                return_sequences=True,
+                input_shape=(x_train.shape[1],1)
+                )
+            )
+        model.add(Dropout(0.2))
+        model.add(
+            LSTM(
+                units=50,
+                return_sequences=True
+            )
+        )
+        model.add(Dropout(0.2))
+        model.add(
+            LSTM(
+                units=50,
+                return_sequences=True
+            )
+        )
+        model.add(Dropout(0.2))
+        model.add(
+            LSTM(
+                units=50
+            )
+        )
+        model.add(Dropout(0.2))
+        model.add(Dense(units=1))
+        model.compile(
+            optimizer = 'adam', loss = 'mean_squared_error'
+        )
+        model.fit(x_train,y_train,epochs=100,batch_size=32)
         process += 1
     st.header("Training result")
         
