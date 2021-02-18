@@ -6,23 +6,16 @@ import numpy as np
 import keras as ks
 import sklearn as sk
 import datetime as dt
+import tensorflow as tf
+import os
 
 tod = dt.date.today()
 
-pm1 = int(tod.strftime("%m"))
+py1 = int(tod.strftime("%Y")) -1
 
 last = ""
 
-if pm1 == 1:
-    pm1 = str(12)
-    y = int(tod.strftime("%Y"))-1
-    y = str(y)
-    last = tod.strftime("{}-{}-%d").format(y,pm1)
-
-if pm1 != 1:
-    pm1 = pm1 - 1
-    pm1 = str(pm1)
-    last = tod.strftime("%Y-{}-%d").format(pm1)
+last = tod.strftime("%{}-%m-%d").format(py1)
 
 today = tod.strftime("%Y-%m-%d")
 
@@ -79,10 +72,15 @@ def option_(choice):
 st.subheader("You chose {}".format(option_(choice)))
 
 data = yf.Ticker(lit[0])
-df = data.history(period=hist[0],start=hist[1],end=hist[2])
+df = data.history(start=hist[1],end=hist[2])
 open_tick = []
 open_tick.append(df.Open)
 open_tick = np.array(open_tick).reshape(-1)
+date_tick = []
+date_tick.append(df.index)
+date_tick = np.array(date_tick).reshape(-1)
+for r in range(len(date_tick)):
+    date_tick[r] = str(pd.to_datetime(str(date_tick[r]))).split(' ')[0]
 close_tick = []
 close_tick.append(df.Close)
 close_tick = np.array(close_tick).reshape(-1)
@@ -101,6 +99,8 @@ dividends_tick = np.array(dividends_tick).reshape(-1)
 
 Closingchart = pd.DataFrame(close_tick)
 
+DateChart = pd.DataFrame(date_tick)
+
 Openchart = pd.DataFrame(open_tick)
 
 Highchart = pd.DataFrame(high_tick)
@@ -111,12 +111,31 @@ Volumechart = pd.DataFrame(volume_tick,)
 
 Dividendchart = pd.DataFrame(dividends_tick)
 
-Chart = pd.concat([Openchart,Highchart,Lowchart,Volumechart,Closingchart, Dividendchart],axis=1)
+Chart = pd.concat([DateChart,Openchart,Highchart,Lowchart,Volumechart,Closingchart, Dividendchart],axis=1)
 
-Chart.columns = ['Open','High','Low','Volume','Close','Dividends']
+Chart.columns = ['Date','Open','High','Low','Volume','Close','Dividends']
+
+Chart.to_csv('Now.csv')
 
 if choice == 0:
-    st.header("Begin training now")
+    process = 0 
+    while process != 1:
+        st.header("Begin training now")
+        st.text("Training ...")
+        high_p = Chart.loc[:,'High'].as_matrix()
+        low_p = Chart.loc[:,'Low'].as_matrix()
+        mid_p = (high_p+low_p)/2.0
+        train_d = mid_p[:len(Chart)/2]
+        test_d = mid_p[len(Chart)/2:]
+        scaler = sk.preprocessing.MinMaxScaler()
+        train_d = train_d.reshape(-1,1)
+        test_d = test_d.reshape(-1,1)
+        
+        
+
+
+
+
 
 
 
