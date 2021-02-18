@@ -176,10 +176,29 @@ if choice == 0:
         model.compile(
             optimizer = 'adam', loss = 'mean_squared_error'
         )
-        model.fit(x_train,y_train,epochs=100,batch_size=32)
+        summary = model.summary()
+        with open('summary.txt','w') as fh:
+            model.summary(print_fn=lambda x: fh.write(x + '\n'))
+        past = model.fit(x_train,y_train,epochs=100,batch_size=32)
+        st.write("""
+        ***
+        """)
+        arr = []
+        st.subheader("Model Summary:")
+        with open('summary.txt','r') as fh:
+            lines = fh.readlines()
+            for m in lines:
+                arr.append(m)
+        fh.close()
+        for u in arr:
+            st.text("{}".format(u))
+        model.save("sp.h5")
         process += 1
     st.header("Training result")
-        
+    print(past.history)
+    for b in past.history:
+        st.text("{}".format(b))
+    
         
 
 
