@@ -7,18 +7,14 @@ import keras as ks
 import sklearn as sk
 import datetime as dt
 import tensorflow as tf
-
+from model import *
 from sklearn.preprocessing import MinMaxScaler
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
-from keras.layers import Dropout
-from keras.layers import *
+
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
-from keras.callbacks import EarlyStopping
+
 
 tod = dt.date.today()
 
@@ -143,39 +139,7 @@ if choice == 0:
             y_train.append(train_s[i, 0])
         x_train, y_train = np.array(x_train), np.array(y_train)
         x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
-        model = Sequential()
-        model.add(
-            LSTM(
-                units=50,
-                return_sequences=True,
-                input_shape=(x_train.shape[1],1)
-                )
-            )
-        model.add(Dropout(0.2))
-        model.add(
-            LSTM(
-                units=50,
-                return_sequences=True
-            )
-        )
-        model.add(Dropout(0.2))
-        model.add(
-            LSTM(
-                units=50,
-                return_sequences=True
-            )
-        )
-        model.add(Dropout(0.2))
-        model.add(
-            LSTM(
-                units=50
-            )
-        )
-        model.add(Dropout(0.2))
-        model.add(Dense(units=1))
-        model.compile(
-            optimizer = 'adam', loss = 'mean_squared_error'
-        )
+        model = stack(x_train)
         summary = model.summary()
         with open('summary.txt','w') as fh:
             model.summary(print_fn=lambda x: fh.write(x + '\n'))
