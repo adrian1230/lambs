@@ -7,11 +7,10 @@ import keras as ks
 import sklearn as sk
 import datetime as dt
 import tensorflow as tf
-import os
 
 tod = dt.date.today()
 
-py1 = int(tod.strftime("%Y")) -1
+py1 = int(tod.strftime("%Y")) - 10
 
 last = ""
 
@@ -113,7 +112,7 @@ Dividendchart = pd.DataFrame(dividends_tick)
 
 Chart = pd.concat([DateChart,Openchart,Highchart,Lowchart,Volumechart,Closingchart, Dividendchart],axis=1)
 
-Chart.columns = ['Date','Open','High','Low','Volume','Close','Dividends']
+Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 
 Chart.to_csv('Now.csv')
 
@@ -122,14 +121,12 @@ if choice == 0:
     while process != 1:
         st.header("Begin training now")
         st.text("Training ...")
-        high_p = Chart.loc[:,'High'].as_matrix()
-        low_p = Chart.loc[:,'Low'].as_matrix()
-        mid_p = (high_p+low_p)/2.0
-        train_d = mid_p[:len(Chart)/2]
-        test_d = mid_p[len(Chart)/2:]
-        scaler = sk.preprocessing.MinMaxScaler()
-        train_d = train_d.reshape(-1,1)
-        test_d = test_d.reshape(-1,1)
+        train = Chart.iloc[:round(len(Chart)*0.7),1:6]
+        test = Chart.iloc[round(len(Chart)*0.7):,6]
+        print(train.head())
+        print(test.head())
+        process += 1
+    st.header("Training result")
         
         
 
