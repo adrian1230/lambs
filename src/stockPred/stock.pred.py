@@ -78,4 +78,47 @@ def option_(choice):
 
 st.subheader("You chose {}".format(option_(choice)))
 
+data = yf.Ticker(lit[0])
+df = data.history(period=hist[0],start=hist[1],end=hist[2])
+open_tick = []
+open_tick.append(df.Open)
+open_tick = np.array(open_tick).reshape(-1)
+close_tick = []
+close_tick.append(df.Close)
+close_tick = np.array(close_tick).reshape(-1)
+high_tick = []
+high_tick.append(df.High)
+high_tick = np.array(high_tick).reshape(-1)
+low_tick = []
+low_tick.append(df.Low)
+low_tick = np.array(low_tick).reshape(-1)
+volume_tick = []
+volume_tick.append(df.Volume)
+volume_tick = np.array(volume_tick).reshape(-1)
+
+Closingchart = pd.DataFrame(
+    close_tick,
+)
+
+Openchart = pd.DataFrame(
+    open_tick,
+)
+
+Highchart = pd.DataFrame(
+    high_tick,
+)
+
+Lowchart = pd.DataFrame(
+    low_tick,
+)
+
+Volumechart = pd.DataFrame(
+    volume_tick,
+)
+
+print(Volumechart)
+
+if choice == 0:
+    st.header("Begin training now")
+
 

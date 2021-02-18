@@ -108,8 +108,6 @@ for j in range(len(lit)):
 
 volume_tick = np.array(volume_tick).reshape((int(length/len(lit)),len(lit)))
 
-print(low_tick)
-
 Closingchart = pd.DataFrame(
     close_tick,
     columns=[lit[d] for d in range(len(lit))]
