@@ -9,12 +9,9 @@ import datetime as dt
 import tensorflow as tf
 from model import *
 from sklearn.preprocessing import MinMaxScaler
-
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
-
 
 tod = dt.date.today()
 
@@ -143,7 +140,7 @@ if choice == 0:
         summary = model.summary()
         with open('summary.txt','w') as fh:
             model.summary(print_fn=lambda x: fh.write(x + '\n'))
-        past = model.fit(x_train,y_train,epochs=100,batch_size=32)
+        # past = model.fit(x_train,y_train,epochs=100,batch_size=32)
         st.write("""
         ***
         """)
@@ -156,12 +153,12 @@ if choice == 0:
         fh.close()
         for u in arr:
             st.text("{}".format(u))
-        model.save("sp.h5")
+        # model.save("sp.h5")
         process += 1
-    st.header("Training result")
-    print(past.history)
-    for b in past.history:
-        st.text("{}".format(b))
+    st.header("Training finished")
+    st.write("""
+        ***
+    """)
     
         
 
