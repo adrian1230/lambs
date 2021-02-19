@@ -6,6 +6,7 @@ import sklearn as sk
 import datetime as dt
 from model import *
 from keras.models import *
+from sklearn.preprocessing import MinMaxScaler
 
 tod = dt.date.today()
 
@@ -156,7 +157,7 @@ if choice == 1:
     latest5 = Chart.drop(["Date","Close"],axis=1).apply(lambda x: (x-np.mean(x))/(np.max(x)-np.min(x)))
     latest5 = np.array(latest5.tail())
     latest5 = latest5.reshape((1,latest5.shape[0],latest5.shape[1]))
-    # pred = loaded.predict(latest5)
+    pred = loaded.predict(latest5)
     # print(pred)
     st.subheader("the prediction of Closing prices for the following 5 days")
     st.text("Based on only the stock market open day")
