@@ -29,11 +29,11 @@ st.write("""
 
 st.header("Enter the stock code here!")
 
-st.subheader("Example Input: AAPL; 1d, 2010-03-14, 2015-03-14")
+st.subheader("Example Input: AAPL; 2010-03-14, 2015-03-14")
 
 st.text("Train from 2010-03-14 to 2015-03-14")
 
-stock_codes = "GE; 1d, {}, {}".format(last,today)
+stock_codes = "GE; {}, {}".format(last,today)
 
 lit = st.text_input("Stock & History Input", stock_codes)
 
@@ -76,7 +76,7 @@ def option_(choice):
 st.subheader("You chose {}".format(option_(choice)))
 
 data = yf.Ticker(lit[0])
-df = data.history(start=hist[1],end=hist[2])
+df = data.history(start=hist[0],end=hist[1])
 open_tick = []
 open_tick.append(df.Open)
 open_tick = np.array(open_tick).reshape(-1)
@@ -140,7 +140,7 @@ if choice == 0:
         summary = model.summary()
         with open('summary.txt','w') as fh:
             model.summary(print_fn=lambda x: fh.write(x + '\n'))
-        # past = model.fit(x_train,y_train,epochs=100,batch_size=32)
+        past = model.fit(x_train,y_train,epochs=100,batch_size=32)
         st.write("""
         ***
         """)
@@ -153,12 +153,14 @@ if choice == 0:
         fh.close()
         for u in arr:
             st.text("{}".format(u))
-        # model.save("sp.h5")
+        model.save("sp.h5")
         process += 1
     st.header("Training finished")
     st.write("""
         ***
     """)
+if choice == 1:
+    pass
     
         
 
