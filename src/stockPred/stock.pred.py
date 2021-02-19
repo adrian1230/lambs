@@ -116,19 +116,20 @@ Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 Chart.to_csv('Now.csv')
 
 train_normal = normal(Chart)
-x_train, y_train = buildSet(train_normal,1,1)
+x_train, y_train = buildSet(train_normal,5,5)
 x_train, y_train = shuf(x_train,y_train)
 x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1)
-y_train = y_train[:,np.newaxis]
-y_val = y_val[:,np.newaxis]
+print(x_train[0],x_train[0].shape)
+y_train = y_train[:,:,np.newaxis]
+y_val = y_val[:,:,np.newaxis]
 
 if choice == 0:
     process = 0 
     while process != 1:
         st.header("Begin training now")
         st.text("Training ...")
-        model = oostack(x_train.shape)
-        callback = EarlyStopping(monitor="loss",patience=10,verbose=1,mode="audo")
+        model = mmstack(x_train.shape)
+        callback = EarlyStopping(monitor="loss",patience=10,verbose=1,mode="auto")
         summary = model.summary()
         with open('summary.txt','w') as fh:
             model.summary(print_fn=lambda x: fh.write(x + '\n'))
@@ -153,6 +154,7 @@ if choice == 0:
     """)
 if choice == 1:
     loaded = load_model('./sp.h5')
+    print(Chart.tail(1))
         
 
 
