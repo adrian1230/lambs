@@ -153,12 +153,16 @@ if choice == 0:
         ***
     """)
 if choice == 1:
+    mms = MinMaxScaler()
     loaded = load_model('./sp.h5')
-    latest5 = Chart.drop(["Date","Close"],axis=1).apply(lambda x: (x-np.mean(x))/(np.max(x)-np.min(x)))
-    latest5 = np.array(latest5.tail())
+    latest5 = Chart.drop(["Date","Close"],axis=1).tail()
+    latest5 = mms.fit_transform(latest5)
+    latest5 = np.array(latest5)
     latest5 = latest5.reshape((1,latest5.shape[0],latest5.shape[1]))
     pred = loaded.predict(latest5)
-    # print(pred)
+    pred = pred.reshape(-1,5)
+    last = mms.inverse_transform(pred)
+    print(last)
     st.subheader("the prediction of Closing prices for the following 5 days")
     st.text("Based on only the stock market open day")
         
