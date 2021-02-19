@@ -8,6 +8,7 @@ import sklearn as sk
 import datetime as dt
 import tensorflow as tf
 from model import *
+from keras.models import *
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
@@ -121,21 +122,22 @@ Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 
 Chart.to_csv('Now.csv')
 
+train = Chart.iloc[:round(len(Chart)*0.7),1:6].values
+test = Chart.iloc[round(len(Chart)*0.7):,6].values
+scaler = MinMaxScaler(feature_range=(0,1))
+train_s = scaler.fit_transform(train)
+x_train, y_train = [], []
+for i in range(60, round(len(Chart)*0.7)):
+    x_train.append(train_s[i-60:i, 0])
+    y_train.append(train_s[i, 0])
+x_train, y_train = np.array(x_train), np.array(y_train)
+x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+
 if choice == 0:
     process = 0 
     while process != 1:
         st.header("Begin training now")
         st.text("Training ...")
-        train = Chart.iloc[:round(len(Chart)*0.7),1:6].values
-        test = Chart.iloc[round(len(Chart)*0.7):,6].values
-        scaler = MinMaxScaler(feature_range=(0,1))
-        train_s = scaler.fit_transform(train)
-        x_train, y_train = [], []
-        for i in range(60, round(len(Chart)*0.7)):
-            x_train.append(train_s[i-60:i, 0])
-            y_train.append(train_s[i, 0])
-        x_train, y_train = np.array(x_train), np.array(y_train)
-        x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
         model = stack(x_train)
         summary = model.summary()
         with open('summary.txt','w') as fh:
@@ -160,7 +162,7 @@ if choice == 0:
         ***
     """)
 if choice == 1:
-    pass
+    loaded = load_model('./sp.h5')
     
         
 
