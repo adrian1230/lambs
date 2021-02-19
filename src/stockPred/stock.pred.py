@@ -1,18 +1,11 @@
 import yfinance as yf
 import streamlit as st
 import pandas as pd
-import seaborn as sns
 import numpy as np
-import keras as ks
 import sklearn as sk
 import datetime as dt
-import tensorflow as tf
 from model import *
 from keras.models import *
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import mean_absolute_error
-from sklearn.model_selection import train_test_split
 
 tod = dt.date.today()
 
@@ -122,27 +115,24 @@ Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 
 Chart.to_csv('Now.csv')
 
-train = Chart.iloc[:round(len(Chart)*0.7),1:6].values
-test = Chart.iloc[round(len(Chart)*0.7):,6].values
-scaler = MinMaxScaler(feature_range=(0,1))
-train_s = scaler.fit_transform(train)
-x_train, y_train = [], []
-for i in range(60, round(len(Chart)*0.7)):
-    x_train.append(train_s[i-60:i, 0])
-    y_train.append(train_s[i, 0])
-x_train, y_train = np.array(x_train), np.array(y_train)
-x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
+train_normal = normal(Chart)
+x_train, y_train = buildSet(train_normal,1,1)
+x_train, y_train = shuf(x_train,y_train)
+x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1)
+y_train = y_train[:,np.newaxis]
+y_val = y_val[:,np.newaxis]
 
 if choice == 0:
     process = 0 
     while process != 1:
         st.header("Begin training now")
         st.text("Training ...")
-        model = stack(x_train)
+        model = oostack(x_train.shape)
+        callback = EarlyStopping(monitor="loss",patience=10,verbose=1,mode="audo")
         summary = model.summary()
         with open('summary.txt','w') as fh:
             model.summary(print_fn=lambda x: fh.write(x + '\n'))
-        past = model.fit(x_train,y_train,epochs=100,batch_size=32)
+        past = model.fit(x_train,y_train,epochs=1000,batch_size=128,validation_data=(x_val,y_val))
         st.write("""
         ***
         """)
@@ -163,7 +153,6 @@ if choice == 0:
     """)
 if choice == 1:
     loaded = load_model('./sp.h5')
-    
         
 
 
