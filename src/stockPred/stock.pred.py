@@ -119,7 +119,7 @@ train_normal = normal(Chart)
 x_train, y_train = buildSet(train_normal,5,5)
 x_train, y_train = shuf(x_train,y_train)
 x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1)
-print(x_train[0],x_train[0].shape)
+print(x_train[0],x_train[0].shape,x_train[0].ndim)
 y_train = y_train[:,:,np.newaxis]
 y_val = y_val[:,:,np.newaxis]
 
@@ -154,7 +154,8 @@ if choice == 0:
     """)
 if choice == 1:
     loaded = load_model('./sp.h5')
-    print(Chart.tail(1))
+    latest5 = Chart.drop(["Date","Close"],axis=1)
+    latest5 = np.array(latest5.tail())
         
 
 
