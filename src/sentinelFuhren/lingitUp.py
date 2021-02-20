@@ -24,11 +24,5 @@ for i in range(len(input)):
     if input[i] == "":
         del input[i]
 
-input
-
-st.write("""
-***
-""")
-
 with st.beta_expander("Check your data in json format"):
     st.text("asd")
