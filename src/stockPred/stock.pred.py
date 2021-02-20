@@ -142,10 +142,10 @@ Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 
 Chart.to_csv('Now.csv')
 
-train_normal = normal(Chart)
-x_train, y_train = buildSet(train_normal,25,25)
-x_train, y_train = shuf(x_train,y_train)
-x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1)
+train_normal = normal(Chart) # from model.py
+x_train, y_train = buildSet(train_normal,25,25) # from model.py
+x_train, y_train = shuf(x_train,y_train) # from model.py
+x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1) # from model.py
 y_train = y_train[:,:,np.newaxis]
 y_val = y_val[:,:,np.newaxis]
 
