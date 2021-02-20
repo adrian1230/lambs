@@ -14,6 +14,8 @@ yfinance = "*"
 streamlit = "*"
 quandl = "*"
 pytrends = "*"
+pandas-datareader = "*"
+to = "*"
 
 [dev-packages]
 
