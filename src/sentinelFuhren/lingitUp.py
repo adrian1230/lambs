@@ -20,6 +20,11 @@ input = st.text_area("Add on some sentences","")
 
 input = input.split(";;")
 
+
+with st.echo():
+    def get_punctuation():
+        return '!!!'
+
 for i in range(len(input)):
     if input[i] == "":
         del input[i]
