@@ -162,7 +162,6 @@ if choice == 1:
     pred = loaded.predict(latest5)
     pred = pred.reshape(-1,5)
     last = mms.inverse_transform(pred)
-    print(last)
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     st.text("Based on only the stock market open day")
     for w in range(len(last)):
