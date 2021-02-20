@@ -1,4 +1,7 @@
 import streamlit as st
+import json as js
+import os
+import datetime as dt
 
 st.write("""
 # Add new data to json and let sentinel figures its sentiment
@@ -20,6 +23,9 @@ input = st.text_area("Add on some sentences","")
 
 input = input.split(";;")
 
+input = dict(input)
+
+print(input)
 
 with st.echo():
     def get_punctuation():
