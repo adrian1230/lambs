@@ -55,7 +55,8 @@ lit = st.text_input("Stock & History Input", stock_codes)
 
 st.text("Fair Tip -")
 st.text("Whenever you want to predict the stock price, you can:")
-st.text("Use the first provided model, which trained on a year of data, or retrain it using the most recent 3 months of data")
+st.text("Use the first provided model, which trained on a year of data, or")
+st.text("retrain it using the most recent 3 months of data")
 
 hist  = lit.split(';')[1].split(',')
 
