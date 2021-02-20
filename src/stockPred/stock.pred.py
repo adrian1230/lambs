@@ -53,6 +53,10 @@ stock_codes = "GE; {}, {}".format(prev,today)
 
 lit = st.text_input("Stock & History Input", stock_codes)
 
+st.text("Fair Tip -")
+st.text("Whenever you want to predict the stock price, you can:")
+st.text("Use the first provided model, which trained on a year of data, or retrain it using the most recent 3 months of data")
+
 hist  = lit.split(';')[1].split(',')
 
 lit = lit.split(';')[0].split(',')
@@ -185,7 +189,7 @@ if choice == 1:
     last = mms.inverse_transform(pred)
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     st.text("Based on only the stock market open day")
-    st.text("The model was based on the data from {} to {}".format(prev,today))
+    st.text("The model was based on the {} stock data from {} to {}".format(lit[0],prev,today))
     for w in range(len(last)):
         st.subheader("day {}:".format(w+1))
         for x in range(len(last[w])):
@@ -203,15 +207,4 @@ if choice == 1:
         st.write("""
         ***
         """)
-if choice != 0 and choice != 1:
-    if type(choice) == int:
-        pass
     
-
-
-
-
-
-
-
-
