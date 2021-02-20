@@ -53,12 +53,12 @@ st.header("Your selected stock: {}".format(lit[0]))
 
 st.subheader("Training or Application")
 
-choice = st.text_input("Training or Application; 0 vs 1: ", 1)
+choice = st.text_input("Training or Application; 0 vs 1: ", 2)
 
 choice = int(choice)
 
-if choice < 0 or choice > 1:
-    raise ValueError("other than 1 or 0")
+# if choice < 0 or choice > 1:
+#     raise ValueError("other than 1 or 0")
 
 def option_(choice):
     if choice == 0:
@@ -66,7 +66,7 @@ def option_(choice):
     elif choice == 1:
         return "Application"
     else:
-        raise ValueError("Not an option")
+        return "Nothing"
 
 st.subheader("You chose {}".format(option_(choice)))
 
@@ -117,7 +117,7 @@ Chart.columns = ['Date','Open','High','Low','Volume','Dividends','Close']
 Chart.to_csv('Now.csv')
 
 train_normal = normal(Chart)
-x_train, y_train = buildSet(train_normal,5,5)
+x_train, y_train = buildSet(train_normal,25,25)
 x_train, y_train = shuf(x_train,y_train)
 x_train, y_train, x_val, y_val = splitData(x_train,y_train,0.1)
 y_train = y_train[:,:,np.newaxis]
@@ -155,7 +155,7 @@ if choice == 0:
 if choice == 1:
     mms = MinMaxScaler()
     loaded = load_model('./sp.h5')
-    latest5 = Chart.drop(["Date","Close"],axis=1).tail()
+    latest5 = Chart.drop(["Date","Close"],axis=1).tail(25)
     latest5 = mms.fit_transform(latest5)
     latest5 = np.array(latest5)
     latest5 = latest5.reshape((1,latest5.shape[0],latest5.shape[1]))
@@ -163,9 +163,29 @@ if choice == 1:
     pred = pred.reshape(-1,5)
     last = mms.inverse_transform(pred)
     print(last)
-    st.subheader("the prediction of Closing prices for the following 5 days")
+    st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     st.text("Based on only the stock market open day")
-        
+    for w in range(len(last)):
+        st.subheader("day {}:".format(w+1))
+        for x in range(len(last[w])):
+            if x == 0:
+                feature = "Open"
+            elif x == 1:
+                feature = "High"
+            elif x == 2:
+                feature = "Low"
+            elif x == 3:
+                feature = "Volume"
+            elif x == 4:
+                feature = "Dividend"
+            st.text("{}: {}".format(feature,round(float(last[w][x]),3)))
+        st.write("""
+        ***
+        """)
+if choice != 0 and choice != 1:
+    if type(choice) == int:
+        pass
+    
 
 
 
