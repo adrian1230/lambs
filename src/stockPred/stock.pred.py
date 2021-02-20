@@ -10,11 +10,32 @@ from sklearn.preprocessing import MinMaxScaler
 
 tod = dt.date.today()
 
-py1 = int(tod.strftime("%Y")) - 10
+pm1 = int(tod.strftime("%m"))
 
-last = ""
+prev = ""
 
-last = tod.strftime("%{}-%m-%d").format(py1)
+if pm1 > 3:
+    pm1 = pm1 - 3
+    pm1 = str(pm1)
+    prev = tod.strftime("%Y-{}-%d").format(pm1)
+
+if pm1 == 1:
+    pm1 = str(10)
+    y = int(tod.strftime("%Y"))-1
+    y = str(y)
+    prev = tod.strftime("{}-{}-%d").format(y,pm1)
+
+if pm1 == 2:
+    pm1 = str(11)
+    y = int(tod.strftime("%Y"))-1
+    y = str(y)
+    prev = tod.strftime("{}-{}-%d").format(y,pm1)
+
+if pm1 == 3:
+    pm1 = str(12)
+    y = int(tod.strftime("%Y"))-1
+    y = str(y)
+    prev = tod.strftime("{}-{}-%d").format(y,pm1)
 
 today = tod.strftime("%Y-%m-%d")
 
@@ -28,7 +49,7 @@ st.subheader("Example Input: AAPL; 2010-03-14, 2015-03-14")
 
 st.text("Train from 2010-03-14 to 2015-03-14")
 
-stock_codes = "GE; {}, {}".format(last,today)
+stock_codes = "GE; {}, {}".format(prev,today)
 
 lit = st.text_input("Stock & History Input", stock_codes)
 
@@ -53,7 +74,7 @@ st.header("Your selected stock: {}".format(lit[0]))
 
 st.subheader("Training or Application")
 
-choice = st.text_input("Training or Application; 0 vs 1: ", 2)
+choice = st.text_input("Training or Application; 0 vs 1: ", 1)
 
 choice = int(choice)
 
@@ -66,7 +87,7 @@ def option_(choice):
     elif choice == 1:
         return "Application"
     else:
-        return "Nothing"
+        raise ValueError("No other option beyond prediction and training")
 
 st.subheader("You chose {}".format(option_(choice)))
 
@@ -164,6 +185,7 @@ if choice == 1:
     last = mms.inverse_transform(pred)
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     st.text("Based on only the stock market open day")
+    st.text("The model was based on the data from {} to {}".format(prev,today))
     for w in range(len(last)):
         st.subheader("day {}:".format(w+1))
         for x in range(len(last[w])):
