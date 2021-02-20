@@ -18,14 +18,17 @@ st.text("use ;; to separate sentences")
 
 input = st.text_area("Add on some sentences","")
 
-input.split(";;")[0]
+input = input.split(";;")
+
+for i in range(len(input)):
+    if input[i] == "":
+        del input[i]
+
+input
 
 st.write("""
 ***
 """)
 
-st.text("Click the button to read the data as json")
-
-btn = st.button("browse")
-
-st.text(btn)
+with st.beta_expander("Check your data in json format"):
+    st.text("asd")

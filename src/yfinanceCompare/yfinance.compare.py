@@ -41,8 +41,8 @@ hist  = lit.split(';')[1].split(',')
 lit = lit.split(';')[0].split(',')
 
 for k in range(len(hist)):
-    hist[k] = hist[k].strip()]]]]]====\]]]]]]]]]=]
-
+    hist[k] = hist[k].strip()
+    
 for i in range(len(lit)):
     lit[i] = lit[i].strip()
 
