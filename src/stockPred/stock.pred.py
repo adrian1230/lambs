@@ -191,6 +191,7 @@ if choice == 1:
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     st.text("Based on only the stock market open day")
     st.text("The model was based on the {} stock data from {} to {}".format(lit[0],prev,today))
+    col1, col2, col3, col4, col5 = st.beta_columns(5)
     for w in range(len(last)):
         st.subheader("day {}:".format(w+1))
         for x in range(len(last[w])):
