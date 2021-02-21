@@ -5,6 +5,7 @@ import numpy as np
 import sklearn as sk
 import datetime as dt
 import csv
+import os
 from model import *
 from keras.models import *
 from sklearn.preprocessing import MinMaxScaler
@@ -192,12 +193,12 @@ if choice == 1:
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     # st.text("Based on only the stock market open day")
     # st.text("The model was based on the {} stock data from {} to {}".format(lit[0],prev,today))
-    csv_ = open('five.csv','w',newline='')
-    writer = csv.writer(csv_)
-    for f in range(len(last)):
-        writer.writerow(last[f])
+    with open('five.csv','w',newline='') as csv_:
+        writer = csv.writer(csv_)
+        writer.writerow("Open,High,Low,Volume,Dividends")
+        for f in range(len(last)):
+            writer.writerow(last[f])
     csv_.close()
-    df = pd.read_csv('./five.csv',)
-    df.columns=['Open','High','Low','Volume','Dividends']
-    st.dataframe(df)
+    df = pd.read_csv('./five.csv')
+    st.write(df)
     
