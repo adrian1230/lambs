@@ -197,44 +197,7 @@ if choice == 1:
     for f in range(len(last)):
         writer.writerow(last[f])
     csv_.close()
-    f = open('five.csv','r')
-    st.text("{} {} {} {} {} {}".format("_________","     Open     ","     High     ","     Low     ","     Volume     ","     Dividend"))
-    col1, col2 = st.beta_columns([3,1])
-    for x in range(len(last)):
-        col1.subheader("Day {}".format(x+1))
-    # for k in range(5):
-    #     col2.subheader(k)
-    col3, col4, col5, col6, col7 = st.beta_columns(5)
-    for w in range(len(last)):
-        for x in range(len(last[w])):
-            if x == 0:
-                feature = "Open"
-            elif x == 1:
-                feature = "High"
-            elif x == 2:
-                feature = "Low"
-            elif x == 3:
-                feature = "Volume"
-            elif x == 4:
-                feature = "Dividend"
-            if w == 0:
-                with col3:
-                    st.subheader("{}:".format(feature))
-                    st.text("{}".format(round(float(last[w][x]),3)))
-            elif w == 1:
-                with col4:
-                    st.subheader("{}:".format(feature))
-                    st.text("{}".format(round(float(last[w][x]),3)))
-            elif w == 2:
-                with col5:
-                    st.subheader("{}:".format(feature))
-                    st.text("{}".format(round(float(last[w][x]),3)))
-            elif w == 3:
-                with col6:
-                    st.subheader("{}:".format(feature))
-                    st.text("{}".format(round(float(last[w][x]),3)))
-            elif w == 4:
-                with col7:
-                    st.subheader("{}:".format(feature))
-                    st.text("{}".format(round(float(last[w][x]),3)))
+    df = pd.read_csv('./five.csv',)
+    df.columns=['Open','High','Low','Volume','Dividends']
+    st.dataframe(df)
     
