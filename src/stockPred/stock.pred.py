@@ -193,12 +193,14 @@ if choice == 1:
     st.subheader("the prediction of {} for the following 5 days".format(lit[0]))
     # st.text("Based on only the stock market open day")
     # st.text("The model was based on the {} stock data from {} to {}".format(lit[0],prev,today))
-    with open('five.csv','w',newline='') as csv_:
-        writer = csv.writer(csv_)
-        writer.writerow("Open,High,Low,Volume,Dividends")
+    with open('five.csv','w') as csv_:
+        writer = csv.writer(csv_,delimiter=',')
+        name = ["Open","High","Low","Volume","Dividends"]
+        writer.writerow([j for j in name])
         for f in range(len(last)):
             writer.writerow(last[f])
     csv_.close()
     df = pd.read_csv('./five.csv')
-    st.write(df)
+    df.index = ["Day {}".format(r+1) for r in range(5)]
+    st.dataframe(df)
     
