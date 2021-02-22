@@ -16,6 +16,7 @@ quandl = "*"
 pytrends = "*"
 pandas-datareader = "*"
 to = "*"
+spacy = "*"
 
 [dev-packages]
 
