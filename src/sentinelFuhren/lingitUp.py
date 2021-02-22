@@ -20,13 +20,14 @@ st.graphviz_chart('''
         sentence -> words
         words -> coreConcepts
         coreConcepts -> pos
-        coreConcepts -> ner
+        pos -> ner
         coreConcepts -> extra
         ner -> coreConcepts
-        ner -> weightMore
-        pos -> weightLess
-        weightMore -> trainingData
-        weightLess -> trainingData
+        Org -> ner
+        Fin -> ner
+        Date -> ner
+        ner -> trainingData
+        trainingData -> training
     }
 ''')
 
