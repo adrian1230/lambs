@@ -1,7 +1,7 @@
 import streamlit as st
-import json as js
 import os
 import datetime as dt
+import csv
 
 st.write("""
 # Let sentinel figures its sentiment
