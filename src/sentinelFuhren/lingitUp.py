@@ -18,10 +18,15 @@ st.graphviz_chart('''
     digraph {
         Sequential -> LSTM
         sentence -> words
-        words -> pos
-        words -> ner
-        words -> extra
-
+        words -> coreConcepts
+        coreConcepts -> pos
+        coreConcepts -> ner
+        coreConcepts -> extra
+        ner -> coreConcepts
+        ner -> weightMore
+        pos -> weightLess
+        weightMore -> trainingData
+        weightLess -> trainingData
     }
 ''')
 
