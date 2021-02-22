@@ -12,8 +12,18 @@ st.write("""
 """)
 
 with st.echo():
-    def get_punctuation():
-        return '!!!'
+    pseudocode = ''
 
-with st.beta_expander("Check your data in json format"):
+st.graphviz_chart('''
+    digraph {
+        Sequential -> LSTM
+        sentence -> words
+        words -> pos
+        words -> ner
+        words -> extra
+
+    }
+''')
+
+with st.beta_expander("Check your data"):
     st.text("asd")
