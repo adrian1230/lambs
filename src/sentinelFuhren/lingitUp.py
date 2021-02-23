@@ -25,7 +25,20 @@ st.graphviz_chart('''
         ner -> coreConcepts
         Org -> ner
         Fin -> ner
+        Dated -> ner
+        Loc -> ner
         Date -> ner
+        BBegin -> tags
+        EEnd -> tags
+        SSingle -> tags
+        OOther -> tags
+        tags -> Org
+        OOther -> extra
+        tags -> Fin 
+        tags -> Dated
+        tags -> Loc
+        tags -> Date
+        IIntermediate -> tags
         ner -> trainingData
         trainingData -> training
     }
