@@ -19,13 +19,6 @@ with st.echo():
     nlp=sp.load('en_core_web_sm')
 
     training = [
-        "This paper shows an alternative deployment of recommender systems. To this end, the authors use two variations of CHC genetic algorithm.",
-        "This manuscript provides an interesting solution with machine learning techniques to classify spectra legacy data of the Hubble Space Telescope. The experiment is sound and very interesting to the Infonor and JCC community. A confusion matrix and parameters for each classifier could clarify results.",
-        "Nothing new from a machine learning perspective. The authors should provide more information about the models they have obtained with the different classifiers and statistical significance.",
-        "In the context of software engineering, the authors do a good job describing the technical details of the tool.",
-        "This paper is not suitable for the SCCC conference. The author should consider reporting this experience on a conference related to computer engineering. The material presented in the paper could be of interest for Oracle.",
-        "A definition of ERP is required - can't assume the reader knows what this means.",
-        "A segmentation procedure for breast tissue images using SVM. Parameter selection in an SVM is critical and may improve notably the performance.",
         "Woke up hours earlier than I needed too. Doggo stole my blanket. Fiona snoring. I'm smiling, because they are the best. Hope they wake up so we can all eat breakfast.",
         "Horrible. I sat on my bed breaking down for about an hour.",
         "It was great. It was the 543rd day where I did exactly the same thing.",
